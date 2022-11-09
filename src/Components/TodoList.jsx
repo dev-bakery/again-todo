@@ -1,52 +1,57 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from "react";
+import AddTodo from "./AddTodo";
+import TodoItem from "./TodoItem";
 
-const TodoList = () => {
-  const inputRef = useRef(null);
-  const [todoList, setTodoList] = useState(iniTialTodoList);
-  const handleDelete = (title) => {
-    setTodoList((todoList) => {
-      const delTodo = todoList.filter(toDo => toDo.title !== title);
-      console.log(title)
-      return delTodo;
-    })
+export default function TodoList({ filter }) {
+  const [todos, setTodos] = useState(initialItems);
 
-  }
-  const handleAdd = (e) => {
-    e.preventDefault();
-    const newTodo = ({
-      id: Date.now(),
-      title: inputRef.current.value
-    })
-    setTodoList((todoList) => [newTodo, ...todoList])
-    inputRef.current.focus();
-    inputRef.current.value = '';
-  }
+  const handleAdd = (newTodo) => {
+    setTodos([...todos, newTodo]);
+  };
+
+  const handleStatusChange = (updated) => {
+    setTodos(todos.map((todo) => (todo.id === updated.id ? updated : todo)));
+  };
+
+  const handelTodoDelete = (deleted) => {
+    setTodos(todos.filter((todo) => todo.id !== deleted.id));
+  };
+
+  const filtered = getFilter(filter, todos);
+
   return (
     <>
       <ul>
-        {
-          todoList.map((v, i) => {
-            return <li key={i}>{v.title}<button onClick={() => handleDelete(v.title)}>삭제</button></li>
-          })
-        }
+        {filtered.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onStatusChange={handleStatusChange}
+            onDelete={handelTodoDelete}
+          />
+        ))}
       </ul>
-      <form action="handleAdd">
-        <input type="text" ref={inputRef} name="" id="" />
-        <button onClick={handleAdd}>추가</button>
-      </form>
+      <AddTodo onAdd={handleAdd} />
     </>
   );
+}
+
+const getFilter = (filter, todos) => {
+  if (filter === "all") {
+    return todos;
+  }
+  return todos.filter((todo) => todo.status === filter);
 };
 
-const iniTialTodoList = [
+const initialItems = [
   {
     id: 1,
-    title: "밥먹기"
+    title: "운동하기",
+    status: "active",
   },
   {
     id: 2,
-    title: "운동하기"
-  }
-]
-
-export default TodoList;
+    title: "청소하기",
+    status: "active",
+  },
+];
