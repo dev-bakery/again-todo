@@ -4,14 +4,14 @@ import { useViewMode } from "../../context/ViewModeContext";
 import styles from "./Header.module.css";
 
 export default function Header({ filter, filters, onUpdate }) {
-  const { mode, toggleMode } = useViewMode();
+  const { darkMode, toggleMode } = useViewMode();
   const handleUpdateFilter = (item) => {
     onUpdate(item);
   };
   return (
     <header className={styles.header}>
       <button type='button' onClick={toggleMode} className={styles.toggle}>
-        {mode ? <HiMoon /> : <HiSun />}
+        {darkMode ? <HiMoon /> : <HiSun />}
       </button>
       <ul className={styles.filters}>
         {filters.map((item, i) => (
