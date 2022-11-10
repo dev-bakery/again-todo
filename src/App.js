@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import Header from "./Components/Header";
-import TodoList from "./Components/TodoList";
+import Header from "./Components/Header/Header";
+import TodoList from "./Components/TodoList/TodoList";
+import { ViewModeProvider } from "./context/ViewModeContext";
 
 const filters = ["all", "active", "complete"];
 function App() {
@@ -10,15 +11,12 @@ function App() {
     setfilter(item);
   };
   return (
-    <div className='App'>
-      <Header
-        filters={filters}
-        filter={filter}
-        filtered={setfilter}
-        onUpdate={handleUpdate}
-      />
-      <TodoList filter={filter} />
-    </div>
+    <ViewModeProvider>
+      <div className='App'>
+        <Header filters={filters} filter={filter} onUpdate={handleUpdate} />
+        <TodoList filter={filter} />
+      </div>
+    </ViewModeProvider>
   );
 }
 

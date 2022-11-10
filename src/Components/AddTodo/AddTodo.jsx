@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import styles from "./AddTodo.module.css";
 import { v4 as uuidv4 } from "uuid"; // 고유한 id값 생성해 줌
 
 export default function AddTodo({ onAdd }) {
@@ -16,15 +17,16 @@ export default function AddTodo({ onAdd }) {
     setValueText("");
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <input
         ref={ref}
         type='text'
         placeholder='write to do..'
         value={valueText}
         onChange={handleChange}
+        className={styles.input}
       />
-      <button>Add</button>
+      <button className={styles.button}>Add</button>
     </form>
   );
 }
