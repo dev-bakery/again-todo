@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./TodoList.module.css";
 import AddTodo from "../AddTodo/AddTodo";
 import TodoItem from "../TodoItem/TodoItem";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export default function TodoList({ filter }) {
   /**
@@ -31,22 +32,40 @@ export default function TodoList({ filter }) {
   };
 
   const filtered = getFilter(filter, todos);
+
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    const items = [...todos];
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setTodos(items);
+  };
   // todos가 업데이트 될떄 마다 로컬스토리지에 저장한다!
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
   return (
     <div className={styles.container}>
-      <ul className={styles.list}>
-        {filtered.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onStatusChange={handleStatusChange}
-            onDelete={handelTodoDelete}
-          />
-        ))}
-      </ul>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId='todos'>
+          {(provided) => (
+            <ul
+              className={styles.list}
+              {...provided.droppableProps}
+              ref={provided.innerRef}>
+              {filtered.map((todo, index) => (
+                <TodoItem
+                  todo={todo}
+                  index={index}
+                  onStatusChange={handleStatusChange}
+                  onDelete={handelTodoDelete}
+                />
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
       <AddTodo onAdd={handleAdd} />
     </div>
   );
