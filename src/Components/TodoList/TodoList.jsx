@@ -55,6 +55,7 @@ export default function TodoList({ filter }) {
               ref={provided.innerRef}>
               {filtered.map((todo, index) => (
                 <TodoItem
+                  key={todo.id}
                   todo={todo}
                   index={index}
                   onStatusChange={handleStatusChange}
