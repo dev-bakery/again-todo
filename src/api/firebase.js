@@ -6,6 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -16,7 +17,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-
+const database = getDatabase(app);
+console.log(database);
 export function login() {
   signInWithPopup(auth, provider).catch(console.error);
 }
@@ -27,7 +29,6 @@ export function logout() {
 
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
-    // console.log(app);
     const updatedUser = user ? await user : null;
     callback(updatedUser);
   });
