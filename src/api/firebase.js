@@ -17,7 +17,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-console.log(app);
 export function login() {
   signInWithPopup(auth, provider).catch(console.error);
 }
@@ -28,6 +27,7 @@ export function logout() {
 
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
+    // console.log(app);
     const updatedUser = user ? await user : null;
     callback(updatedUser);
   });
