@@ -1,23 +1,20 @@
 import React, { useRef, useState } from "react";
 import styles from "./AddTodo.module.css";
 import { v4 as uuidv4 } from "uuid"; // 고유한 id값 생성해 줌
+import { formatAgo } from "../../util/data";
 
 export default function AddTodo({ onAdd }) {
   const ref = useRef();
   const [valueText, setValueText] = useState("");
   const handleChange = (e) => setValueText(e.target.value);
   const handleSubmit = (e) => {
-    e.preventDefault();
     const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    const day = now.getDate();
 
     const newTodo = {
       id: uuidv4(),
       title: valueText,
       status: "active",
-      date: `${year}/${month}/${day}`,
+      date: formatAgo(now),
     };
     onAdd(newTodo);
     setValueText("");

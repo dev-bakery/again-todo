@@ -36,6 +36,7 @@ export default function TodoList({ filter }) {
   const onDragEnd = (result) => {
     if (!result.destination) return;
     const items = [...todos];
+    console.log(items);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setTodos(items);
