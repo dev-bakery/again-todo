@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { HiMoon, HiSun } from "react-icons/hi";
-import { login, logout, onUserStateChange } from "../../api/firebase";
+// import { login, logout, onUserStateChange } from "../../api/firebase";
 import { useViewMode } from "../../context/ViewModeContext";
 import styles from "./Header.module.css";
 
 export default function Header({ filter, filters, onUpdate }) {
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
   const { darkMode, toggleMode } = useViewMode();
   const handleUpdateFilter = (item) => {
     onUpdate(item);
   };
   useEffect(() => {
-    onUserStateChange((user) => setUser(user));
+    // onUserStateChange((user) => setUser(user));
   }, []);
   return (
     <header className={styles.header}>
@@ -32,16 +32,6 @@ export default function Header({ filter, filters, onUpdate }) {
           </li>
         ))}
       </ul>
-      {!user && (
-        <button type='button' className={styles.login} onClick={login}>
-          Login
-        </button>
-      )}
-      {user && (
-        <button type='button' className={styles.login} onClick={logout}>
-          Logout
-        </button>
-      )}
     </header>
   );
 }
