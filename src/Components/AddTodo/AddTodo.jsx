@@ -12,7 +12,6 @@ export default function AddTodo({ onAdd }) {
       id: uuidv4(),
       title: valueText,
       status: "active",
-      date: new Date().toISOString(),
     };
     onAdd(newTodo);
     setValueText("");
