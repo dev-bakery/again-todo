@@ -1,6 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { FaTrashAlt } from "react-icons/fa";
+import { formatAgo } from "../../util/data";
 import styles from "./TodoItem.module.css";
 
 export default function TodoItem({ todo, onStatusChange, onDelete, index }) {
@@ -30,7 +31,7 @@ export default function TodoItem({ todo, onStatusChange, onDelete, index }) {
           <label htmlFor={`checkbox${id}`} className={styles.text}>
             {title}
           </label>
-          <span className={styles.date}>{date}</span>
+          <span className={styles.date}>{formatAgo(date)}</span>
           <span className={styles.icon}>
             <button onClick={handleDelete} className={styles.button}>
               <FaTrashAlt />
