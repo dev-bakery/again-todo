@@ -9,7 +9,6 @@ export default function AddTodo({ onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const now = new Date().toISOString();
-    console.log(typeof now);
     const newTodo = {
       id: uuidv4(),
       title: valueText,

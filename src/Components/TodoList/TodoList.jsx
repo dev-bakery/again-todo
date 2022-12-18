@@ -36,7 +36,6 @@ export default function TodoList({ filter }) {
   const onDragEnd = (result) => {
     if (!result.destination) return;
     const items = [...todos];
-    console.log(items);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setTodos(items);
@@ -54,15 +53,16 @@ export default function TodoList({ filter }) {
               className={styles.list}
               {...provided.droppableProps}
               ref={provided.innerRef}>
-              {filtered.map((todo, index) => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  index={index}
-                  onStatusChange={handleStatusChange}
-                  onDelete={handelTodoDelete}
-                />
-              ))}
+              {filtered &&
+                filtered.map((todo, index) => (
+                  <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    index={index}
+                    onStatusChange={handleStatusChange}
+                    onDelete={handelTodoDelete}
+                  />
+                ))}
               {provided.placeholder}
             </ul>
           )}
