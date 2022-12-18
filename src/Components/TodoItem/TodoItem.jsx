@@ -13,6 +13,7 @@ export default function TodoItem({ todo, onStatusChange, onDelete, index }) {
   const handleDelete = () => {
     onDelete(todo);
   };
+  const textDate = formatAgo(date);
   return (
     <Draggable key={todo.id} draggableId={todo.id} index={index}>
       {(provided) => (
@@ -31,7 +32,7 @@ export default function TodoItem({ todo, onStatusChange, onDelete, index }) {
           <label htmlFor={`checkbox${id}`} className={styles.text}>
             {title}
           </label>
-          <span className={styles.date}>{formatAgo(date)}</span>
+          <span className={styles.date}>{textDate}</span>
           <span className={styles.icon}>
             <button onClick={handleDelete} className={styles.button}>
               <FaTrashAlt />
